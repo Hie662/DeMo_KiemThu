@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Tinh tien dien (ban co loi co y)</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #e9eef5; display: flex; justify-content: center; padding-top: 60px; }
+  .form { background: #f4f4f4; border: 1px solid #8aa; border-radius: 6px; padding: 28px 36px; width: 420px; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+  h2 { margin: 0 0 20px; font-size: 18px; color: #234; }
+  .row { display: flex; align-items: center; margin-bottom: 14px; }
+  .row label { width: 110px; font-size: 15px; }
+  .row input { flex: 1; padding: 7px 8px; font-size: 15px; border: 1px solid #99a; border-radius: 3px; }
+  .row input[readonly] { background: #e4e4e4; font-weight: bold; }
+  .buttons { display: flex; justify-content: space-around; margin-top: 22px; }
+  button { padding: 8px 32px; font-size: 15px; cursor: pointer; border: 1px solid #778; border-radius: 4px; background: #fdfdfd; }
+  button:hover { background: #dfe8f5; }
+</style>
+</head>
+<body>
+  <div class="form">
+    <h2>Tính tiền điện sinh hoạt</h2>
+    <div class="row">
+      <label for="so_cu">Số cũ</label>
+      <input id="so_cu" name="so_cu" type="text" autocomplete="off">
+    </div>
+    <div class="row">
+      <label for="so_moi">Số mới</label>
+      <input id="so_moi" name="so_moi" type="text" autocomplete="off">
+    </div>
+    <div class="row">
+      <label for="thanh_tien">Thành tiền</label>
+      <input id="thanh_tien" name="thanh_tien" type="text" readonly>
+    </div>
+    <div class="buttons">
+      <button id="btn_tinh" type="button">Tính</button>
+      <button id="btn_dong" type="button">Đóng</button>
+    </div>
+  </div>
+
+<script>
+  // Bảng giá bậc thang (đồng/kWh) theo đề bài Module 2, Bài 8
+  var BAC = [
+    { tran: 50,       gia: 1484 },
+    { tran: 100,      gia: 1535 },   // LOI CO Y: dung la 1533 (de demo bao FAIL)
+    { tran: 200,      gia: 1786 },
+    { tran: 300,      gia: 2242 },
+    { tran: 400,      gia: 2503 },
+    { tran: Infinity, gia: 2587 }
+  ];
+  var VAT = 0.10;
+
+  function tinhTienDien(chiSoCu, chiSoMoi) {
+    if (chiSoCu < 0 || chiSoMoi < 0 || chiSoCu > chiSoMoi) return -1;
+    var kwh = chiSoMoi - chiSoCu;
+    var tien = 0, daTinh = 0;
+    for (var i = 0; i < BAC.length && daTinh < kwh; i++) {
+      var soKwhBac = Math.min(kwh, BAC[i].tran) - daTinh;
+      tien += soKwhBac * BAC[i].gia;
+      daTinh += soKwhBac;
+    }
+    return Math.round(tien * (1 + VAT));   // làm tròn đến đồng
+  }
+
+  function docSo(text) {
+    var s = text.trim();
+    if (!/^-?\d+$/.test(s)) return NaN;   // chỉ nhận số nguyên
+    return parseInt(s, 10);
+  }
+
+  document.getElementById('btn_tinh').addEventListener('click', function () {
+    var cu  = docSo(document.getElementById('so_cu').value);
+    var moi = docSo(document.getElementById('so_moi').value);
+    var kq  = (isNaN(cu) || isNaN(moi)) ? -1 : tinhTienDien(cu, moi);
+    document.getElementById('thanh_tien').value = kq;
+  });
+
+  document.getElementById('btn_dong').addEventListener('click', function () {
+    document.getElementById('so_cu').value = '';
+    document.getElementById('so_moi').value = '';
+    document.getElementById('thanh_tien').value = '';
+  });
+</script>
+</body>
+</html>

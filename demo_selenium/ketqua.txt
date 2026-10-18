@@ -1,0 +1,22 @@
+Ma TC    Mong doi    Thuc te  Ket qua  Mo ta
+------------------------------------------------------------------------------
+TC01            0          0  PASS     Tieu thu 0 kWh (bien duoi)
+TC02        81620      81620  PASS     Het bac 1 (bien tren bac 1)
+TC03        83306      83306  PASS     Vao bac 2 (bien duoi bac 2)
+TC04       132209     132209  PASS     Vi du trong de bai (80 kWh)
+TC05       165935     165935  PASS     Het bac 2
+TC06       167900     167900  PASS     Vao bac 3
+TC07       362395     362395  PASS     Het bac 3
+TC08       364861     364861  PASS     Vao bac 4
+TC09       609015     609015  PASS     Het bac 4
+TC10       611768     611768  PASS     Vao bac 5
+TC11       884345     884345  PASS     Het bac 5
+TC12       887191     887191  PASS     Vao bac 6
+TC13        81620      81620  PASS     So cu khac 0 (50 kWh)
+TC14           -1         -1  PASS     So cu lon hon so moi (khong hop le)
+TC15           -1         -1  PASS     So cu am (khong hop le)
+TC16           -1         -1  PASS     So moi am (khong hop le)
+TC17           -1         -1  PASS     Nhap chu thay vi so (khong hop le)
+TC18           -1         -1  PASS     De trong so cu (khong hop le)
+------------------------------------------------------------------------------
+Tong: 18 test case | PASS: 18 | FAIL: 0
